@@ -1,0 +1,61 @@
+﻿@model CandidatesVM
+<form asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="Candidate.Id" hidden />
+    <input asp-for="Candidate.ImageUrl" hidden />
+    
+    
+    <div class = "border p-3 mt-4">
+        <div class = "row pb-2">
+            <h2 class="text-primary">
+                @(Model.Candidate.Id!=0?"Update":"Create") Product
+            </h2>
+        </div>
+        <div class="col-10">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="mb-3 row">
+                <lable asp-for="Name">Name</lable>
+                <input asp-for="Candidate.Name" type="text" class="form-control" />
+                <span asp-validation-for="Candidate.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3 row">
+                <lable asp-for="Add">Address</lable>
+                <input asp-for="Candidate.Address " type="text" class="form-control" />
+                <span asp-validation-for="Candidate.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3 row">
+                <lable asp-for="Add">Class</lable>
+                <input asp-for="Candidate.Class" type="text" class="form-control" />
+                <span asp-validation-for="Candidate.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3 row">
+                <lable asp-for="Add">Image</lable>
+                <input type="file" name="file" class="form-control" />
+                <span asp-validation-for="Candidate.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Candidate.CourseId">Course</label>
+                <select asp-for="@Model.Candidate.CourseId" type="text" asp-items="@Model.CourseList" class="form-control"><option disabled selected>--SelectCourse</option></select>
+                <span asp-validation-for="Candidate.CourseId" class="text-danger"></span>
+            </div>
+            <div class=" row">
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-controller="Candidate" asp-action="Index" class="btn btn-secondary form-control">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-2">
+            <img src="@Model.Candidate.ImageUrl" width="100%" 
+            style="border-radius:5px; border:1px solid #bbb9b9"/>
+            
+        </div>
+        
+      
+   
+</form>
+

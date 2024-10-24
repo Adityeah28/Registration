@@ -9,7 +9,7 @@ namespace Registration.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICourseRepository Course { get; }
-        //object StudentRegistration { get; set; }
+        ICandidateRepository Candidate { get; }
 
         void Save();
     }

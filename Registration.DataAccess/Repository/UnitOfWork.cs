@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace Registration.DataAccess.Repository
 {
-    public class UnitOfWork : IUnitOfWork 
+    public class UnitOfWork : IUnitOfWork
     {
 
-        private ApplicationDbContext _db;
+        private ApplicationDbContext _db; 
         public ICourseRepository Course { get; private set; }
+        public ICandidateRepository Candidate { get; private set; }
         public UnitOfWork(ApplicationDbContext db) 
         {
             _db = db;
             Course = new CourseRepository(db);
+            Candidate = new CandidateRepository(db);
         }
         
 
