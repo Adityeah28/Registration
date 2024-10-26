@@ -5,6 +5,7 @@ using Registration.DataAccess.Repository.IRepository;
 using Registration.Models;
 using SQLitePCL;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Registration.Areas.Admin.Controllers
 {
@@ -19,12 +20,29 @@ namespace Registration.Areas.Admin.Controllers
             _logger = logger;
             _unitofWork = unitOfWork;
         }
-
         public IActionResult Index()
+
         {
-            IEnumerable<Candidates> candidatesList = _unitofWork.Candidate.GetAll(includeProperties: "Course"); 
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get logged-in user's ID
+
+            IEnumerable<Candidates> candidatesList = _unitofWork.Candidate
+
+                .GetAll(includeProperties: "Course")
+
+                .Where(c => c.Id == userId); // Filter candidates for the logged-in user
+
             return View(candidatesList);
+
         }
+
+
+        //public IActionResult Index()
+        //{
+
+        //    IEnumerable<Candidates> candidatesList = _unitofWork.Candidate.GetAll(includeProperties: "Course");
+        //    return View(candidatesList);
+        //}
         public IActionResult Sas()
         {
            

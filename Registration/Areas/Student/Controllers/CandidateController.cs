@@ -105,7 +105,7 @@ namespace Registration.Areas.Student.Controllers
                 return RedirectToAction("Index");
             }
 
-            // If we reach here, something went wrong, so we need to re-populate the CourseList
+            
             candidateVM.CourseList = _unitOfWork.Course.GetAll().Select(u => new SelectListItem
             {
                 Text = u.Name,

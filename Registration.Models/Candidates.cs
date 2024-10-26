@@ -25,7 +25,7 @@ namespace Registration.Models
         [ValidateNever]
         public string ImageUrl {  get; set; }
         [ValidateNever]
-        public string? Status { get; set; } = string.Empty;
+        public string? Status { get; set; }="Pending";
         
 
     }

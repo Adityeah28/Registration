@@ -90,8 +90,11 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to XYZ College Registration</h1>
+        <h3>Welcome to ATHREYA College</h3>
+        <h1>We are on a mission to create the BEST Software Engineers from Hubballi-Dharwad</h1>
+        <h1>What we think we become</h1>
     </header>
+
 
 
 
@@ -113,13 +116,11 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="card border-0 p-3 shadow border-top border-5 rounded">
-                            <img src=@candidates.ImageUrl class="card-img-top rounded" />
+                            <img src=@candidates.ImageUrl class="card-img-top rounded" style="max-height: 170px;" />
                             <div class="pl-1">
                                 <p class="card-title h5 text-light opacity-85 text-uppercase text-center">@candidates.Name</p>
                             </div>
-                            <div class="pl-1">
-                                <p class="card-title h5 text-light opacity-85 text-uppercase text-center">@candidates.Class</p>
-                            </div>
+                            
                             <div>
                                 <a asp-action="Details" asp-route-candidateId="@candidates.Id" class="btn btn-primary bg-gradient border-0 form-control">
                                     Details
