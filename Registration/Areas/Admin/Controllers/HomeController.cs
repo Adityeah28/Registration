@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Registration.DataAccess.Repository;
@@ -14,40 +15,39 @@ namespace Registration.Areas.Admin.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitofWork;
-
-        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork)
+        private readonly UserManager<IdentityUser> _userManager;
+        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork,UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _unitofWork = unitOfWork;
+            _userManager = userManager;
         }
+
+
         public IActionResult Index()
-
         {
-
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get logged-in user's ID
-
-            IEnumerable<Candidates> candidatesList = _unitofWork.Candidate
-
-                .GetAll(includeProperties: "Course")
-
-                .Where(c => c.Id == userId); // Filter candidates for the logged-in user
-
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<Candidates> candidatesList;
+            if (User.IsInRole("Admin"))
+            {
+                candidatesList = _unitofWork.Candidate.GetAll(includeProperties: "Course").ToList();
+                return View(candidatesList);
+            }
+            candidatesList = _unitofWork.Candidate.GetCandiateCourse(u => u.UserId == userId, includeProperties: "Course");
             return View(candidatesList);
-
         }
-
-
         //public IActionResult Index()
         //{
+        //    var userId = _userManager.GetUserId(User);
 
-        //    IEnumerable<Candidates> candidatesList = _unitofWork.Candidate.GetAll(includeProperties: "Course");
+        //    // Get candidates created by the logged-in user
+        //    IEnumerable<Candidates> candidatesList = _unitofWork.Candidate.GetAll(includeProperties: "Course")
+        //        .Where(c => c.UserId == userId);
+
         //    return View(candidatesList);
         //}
-        public IActionResult Sas()
-        {
-           
-            return View();
-        }
+
+
         public IActionResult Details(int? candidateId)
         {
             Candidates candidate= _unitofWork.Candidate.Get(u=>u.Id==candidateId,includeProperties: "Course");
@@ -56,31 +56,6 @@ namespace Registration.Areas.Admin.Controllers
 
 
 
-        //public IActionResult Approve(int candidateId)
-        //{
-        //    var candidate = _unitofWork.Candidate.Get(u => u.Id == candidateId);
-        //    if (candidate != null)
-        //    {
-        //        candidate.Status = "Approved"; // Set status to Approved
-        //        _unitofWork.Candidate.Update(candidate);
-        //        _unitofWork.Save();
-        //    }
-
-        //    return RedirectToAction(nameof(Index)); // Redirect back to the Index action
-        //}
-
-        //public IActionResult Deny(int candidateId)
-        //{
-        //    var candidate = _unitofWork.Candidate.Get(u => u.Id == candidateId);
-        //    if (candidate != null)
-        //    {
-        //        candidate.Status = "Denied"; // Set status to Denied
-        //        _unitofWork.Candidate.Update(candidate);
-        //        _unitofWork.Save();
-        //    }
-
-        //    return RedirectToAction(nameof(Index)); // Redirect back to the Index action
-        //}
 
 
         [HttpPost]

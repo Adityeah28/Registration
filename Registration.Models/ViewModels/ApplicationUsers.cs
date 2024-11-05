@@ -17,5 +17,6 @@ namespace Registration.Models
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
+        public Candidates Candidates { get; set; }
     }
 }

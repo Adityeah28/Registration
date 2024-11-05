@@ -17,7 +17,6 @@ namespace Registration.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string Class { get; set; }
-
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         [ValidateNever]
@@ -26,7 +25,9 @@ namespace Registration.Models
         public string ImageUrl {  get; set; }
         [ValidateNever]
         public string? Status { get; set; }="Pending";
-        
-
+        public string? UserId { get; set; }
+        [ForeignKey("UserId")]
+        [ValidateNever]
+        public ApplicationUser User { get; set; }
     }
 }

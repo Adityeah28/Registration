@@ -128,8 +128,8 @@
                             </div>
                         </div>
                     }
-                    @if(User.IsInRole("Student"))
-                    {
+                    @if( User.IsInRole("Student"))
+                    { 
                         <div class="card border-0 p-3 shadow border-top border-5 rounded">
                             <img src=@candidates.ImageUrl class="card-img-top rounded" />
                             <div class="pl-1">
@@ -140,15 +140,11 @@
                             </div>
                             <div class="pl-1">
                                 <p class="card-title h5 text-light opacity-85 text-uppercase text-center
-            @(candidates.Status == "Approved" ? "bg-success" : candidates.Status == "Denied" ? "bg-danger" : "bg-secondary") text-white p-2 rounded">
+                                         @(candidates.Status == "Approved" ? "bg-success" : candidates.Status == "Denied" ? "bg-danger" : "bg-secondary") text-white p-2 rounded">
                                     @candidates.Status
                                 </p>
                             </div>
                         </div>
-
-
-
-
                     }
                    
                 </div>

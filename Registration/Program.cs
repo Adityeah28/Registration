@@ -26,7 +26,6 @@ builder.Services.AddRazorPages();
 // Register UnitOfWork and EmailSender
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-
 // Configure Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();  // Log to the console

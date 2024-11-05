@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using Registration.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Registration.Areas.Student.Controllers
@@ -17,19 +18,27 @@ namespace Registration.Areas.Student.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CandidateController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly UserManager<IdentityUser> _userManager;
+        public CandidateController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
-
-            List<Candidates> objCandidateList = _unitOfWork.Candidate.GetAll(includeProperties: "Course").ToList();
+            var UserId = _userManager.GetUserId(User);
+            List<Candidates> objCandidateList;
+            if (User.IsInRole("Admin"))
+            {
+                objCandidateList = _unitOfWork.Candidate.GetAll(includeProperties: "Course").ToList();
+                return View(objCandidateList);
+            }
+            objCandidateList = _unitOfWork.Candidate.GetCandiateCourse(u => u.UserId ==  UserId,includeProperties: "Course").ToList();
 
             return View(objCandidateList);
         }
-        
+
         public IActionResult Upsert(int? id)
         {
 
@@ -57,9 +66,11 @@ namespace Registration.Areas.Student.Controllers
 
         }
         [HttpPost]
-        [HttpPost]
+        
         public IActionResult Upsert(CandidatesVM candidateVM, IFormFile? file)
         {
+            ModelState.Remove("User");
+            candidateVM.Candidate.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;

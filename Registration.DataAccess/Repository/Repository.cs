@@ -41,6 +41,21 @@ namespace Registration.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
+        public IEnumerable<T> GetCandiateCourse(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            return query.ToList();
+        }
 
         public IEnumerable<T> GetAll(string? includeProperties = null)
         {

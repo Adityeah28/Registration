@@ -12,4 +12,5 @@ namespace Registration.DataAccess.Repository.IRepository
         void Update(Candidates obj);
         
     }
+
 }

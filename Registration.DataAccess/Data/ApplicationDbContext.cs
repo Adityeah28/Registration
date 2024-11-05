@@ -29,8 +29,8 @@ namespace Registration.DataAccess.Data
                new Candidates { Id = 1 , Name="Den" , Address = "Hubballi" , Class = "1st Puc",CourseId = 1,ImageUrl="",Status=""},
                new Candidates { Id = 2, Name = "Ben", Address = "Hubballi", Class = "1st Puc",CourseId = 2 ,ImageUrl= "" ,Status = "" },
                new Candidates { Id = 3, Name = "Glen", Address = "Hubballi", Class = "1st Puc" , CourseId = 3 , ImageUrl = "" , Status = "" },
-               new Candidates { Id = 4, Name = "Dexter", Address = "Hubballi", Class = "1st Puc" , CourseId = 1 , ImageUrl = "" , Status = "" }
-
+               new Candidates { Id = 4, Name = "Dexter", Address = "Hubballi", Class = "1st Puc" , CourseId = 1 , ImageUrl = "" , Status = "" },
+               new Candidates { Id = 8, Name = "Dexter8i", Address = "Hubballi", Class = "1st Puc", CourseId = 1, ImageUrl = "", Status = ""}
 
                 );
         }

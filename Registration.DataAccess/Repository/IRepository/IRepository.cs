@@ -11,6 +11,7 @@ namespace Registration.DataAccess.Repository.IRepository
     {
         //T - Course
         IEnumerable<T> GetAll(string? includeProperties = null);
+        IEnumerable<T> GetCandiateCourse(Expression<Func<T, bool>> filter, string? includeProperties = null);
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
         void Add(T entity);
         void Remove(T entity);
